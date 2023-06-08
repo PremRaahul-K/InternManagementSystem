@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using UserManagementAPI.Interfaces;
+using UserManagementAPI.Models.DTOs;
 
 namespace UserManagementAPI.Services
 {
@@ -24,9 +25,37 @@ namespace UserManagementAPI.Services
             _passwordService = passwordService;
             _tokenService = tokenService;
         }
-        public Task<USerDTO> ChangeStatus(USerDTO user)
+
+        public async Task<bool> ChangePassword(ManagePassword managePassword)
         {
-            throw new NotImplementedException();
+            var userData = await _userRepo.Get(managePassword.UserId);
+            if (userData != null) 
+            {
+                var hmac = new HMACSHA512();
+                userData.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(managePassword.NewPassword));
+                userData.PasswordKey = hmac.Key;
+                var result = await _userRepo.Update(userData);
+                if (result!=null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public async Task<UserApproval> ChangeStatus(UserApproval userApproval)
+        {
+            var userData = await _userRepo.Get(userApproval.UserId);
+            if (userData != null)
+            {
+                userData.Status = userApproval.Status;
+                var result = await _userRepo.Update(userData);
+                if (result != null)
+                {
+                    return userApproval;
+                }
+            }
+            return null;
         }
 
         public async Task<USerDTO> Login(USerDTO user)
@@ -57,6 +86,8 @@ namespace UserManagementAPI.Services
             string generatedPassword = await _passwordService.GeneratePassword(intern);
             intern.User.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(generatedPassword));
             intern.User.PasswordKey = hmac.Key;
+            intern.User.Role = "Intern";
+            intern.User.Status = "Not Approved";
             var userResult = await _userRepo.Add(intern.User);
             var internResult = await _internRepo.Add(intern);
             if (userResult != null && internResult != null)

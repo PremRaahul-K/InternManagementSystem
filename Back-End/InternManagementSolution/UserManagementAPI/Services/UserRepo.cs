@@ -1,5 +1,6 @@
 ﻿using InterUserManagementAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using UserManagementAPI.Interfaces;
 using UserManagementAPI.Models;
 
@@ -95,7 +96,7 @@ namespace UserManagementAPI.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);   
+                Debug.WriteLine(ex.Message);
             }
             return null;
         }

@@ -1,5 +1,6 @@
 ﻿using InterUserManagementAPI.Models;
 using InterUserManagementAPI.Models.DTOs;
+using UserManagementAPI.Models.DTOs;
 
 namespace UserManagementAPI.Interfaces
 {
@@ -7,6 +8,8 @@ namespace UserManagementAPI.Interfaces
     {
         public Task<USerDTO> Login(USerDTO user);
         public Task<USerDTO> Register(Intern intern);
-        public Task<USerDTO> ChangeStatus(USerDTO user);
+        public Task<UserApproval> ChangeStatus(UserApproval userApproval);
+        public Task<bool> ChangePassword(ManagePassword managePassword);
+
     }
 }

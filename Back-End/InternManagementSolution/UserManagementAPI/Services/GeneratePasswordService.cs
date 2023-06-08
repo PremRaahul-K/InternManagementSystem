@@ -10,6 +10,8 @@ namespace InterUserManagementAPI.Services
         {
             string password = String.Empty;
             password = intern.Name.Substring(0, 4);
+            password += intern.DateOfBirth.Day;
+            password += intern.DateOfBirth.Month;
             return password;
         }
     }

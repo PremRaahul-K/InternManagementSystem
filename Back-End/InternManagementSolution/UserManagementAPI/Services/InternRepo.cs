@@ -53,7 +53,7 @@ namespace UserManagementAPI.Services
         {
             try
             {
-                var intern = await _context.Interns.FirstOrDefaultAsync(i=>i.Id == key);
+                var intern = await _context.Interns.Include(i=>i.User).FirstOrDefaultAsync(i=>i.Id == key);
                 return intern;
             }
             catch (Exception ex)
@@ -67,7 +67,7 @@ namespace UserManagementAPI.Services
         {
             try
             {
-                var interns = await _context.Interns.ToListAsync();
+                var interns = await _context.Interns.Include(i=>i.User).ToListAsync();
                 if (interns.Count > 0)
                     return interns;
             }

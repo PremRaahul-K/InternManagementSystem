@@ -3,6 +3,7 @@ using InterUserManagementAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using UserManagementAPI.Interfaces;
 using UserManagementAPI.Models;
@@ -15,14 +16,39 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c => {
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JWT Authorization header using the Bearer scheme."
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                 {
+                     {
+                           new OpenApiSecurityScheme
+                             {
+                                 Reference = new OpenApiReference
+                                 {
+                                     Type = ReferenceType.SecurityScheme,
+                                     Id = "Bearer"
+                                 }
+                             },
+                             new string[] {}
 
+                     }
+                 });
+});
 
 //User Created Services
 builder.Services.AddDbContext<UserContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("UserCon")));
 builder.Services.AddScoped<IRepo<int, User>, UserRepo>();
 builder.Services.AddScoped<IRepo<int, Intern>, InternRepo>();
 builder.Services.AddScoped<IGeneratePassword, GeneratePasswordService>();
+builder.Services.AddScoped<IRetriveUsers<int>, RetriveUsersRepo>();
 builder.Services.AddScoped<IManageUser, ManageUserService>();
 builder.Services.AddScoped<ITokenGenerate, TokenGenerateService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
