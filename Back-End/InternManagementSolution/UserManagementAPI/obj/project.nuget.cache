@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XLXYVQXpPwwyJ/FduSUI00zKA+3oWV3EVzID+CneTWKbf/pJev10z7y9WHvkkho/JZoiALvbETA+GlvtqLd6gA==",
+  "dgSpecHash": "VylENbAvhPwac5C8a7Lkyb1UgTZfYUp9HkpYaWpgC84OKf20QpdyYmh+POLK6sB/tGBJnrBMwVa1y77JIMukZQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Prem Raahul K\\Desktop\\Kanini\\Web API\\InternManagementSolution\\UserManagementAPI\\UserManagementAPI.csproj",
+  "projectFilePath": "C:\\Users\\Prem Raahul K\\Desktop\\InternManagementSystem\\Back-End\\InternManagementSolution\\UserManagementAPI\\UserManagementAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Prem Raahul K\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Prem Raahul K\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.16\\microsoft.aspnetcore.authentication.jwtbearer.6.0.16.nupkg.sha512",

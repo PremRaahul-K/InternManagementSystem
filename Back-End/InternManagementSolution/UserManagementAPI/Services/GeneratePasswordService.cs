@@ -1,4 +1,5 @@
 ﻿using InterUserManagementAPI.Models;
+using System.Diagnostics;
 using UserManagementAPI.Interfaces;
 
 namespace InterUserManagementAPI.Services
@@ -9,8 +10,6 @@ namespace InterUserManagementAPI.Services
         {
             string password = String.Empty;
             password = intern.Name.Substring(0, 4);
-            password += intern.DateOfBirth.Date;
-            password += intern.DateOfBirth.Month;
             return password;
         }
     }

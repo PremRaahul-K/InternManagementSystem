@@ -2278,11 +2278,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Prem Raahul K\\Desktop\\Kanini\\Web API\\InternManagementSolution\\UserManagementAPI\\UserManagementAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Prem Raahul K\\Desktop\\InternManagementSystem\\Back-End\\InternManagementSolution\\UserManagementAPI\\UserManagementAPI.csproj",
       "projectName": "UserManagementAPI",
-      "projectPath": "C:\\Users\\Prem Raahul K\\Desktop\\Kanini\\Web API\\InternManagementSolution\\UserManagementAPI\\UserManagementAPI.csproj",
+      "projectPath": "C:\\Users\\Prem Raahul K\\Desktop\\InternManagementSystem\\Back-End\\InternManagementSolution\\UserManagementAPI\\UserManagementAPI.csproj",
       "packagesPath": "C:\\Users\\Prem Raahul K\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Prem Raahul K\\Desktop\\Kanini\\Web API\\InternManagementSolution\\UserManagementAPI\\obj\\",
+      "outputPath": "C:\\Users\\Prem Raahul K\\Desktop\\InternManagementSystem\\Back-End\\InternManagementSolution\\UserManagementAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -20,6 +20,7 @@ namespace UserManagementAPI.Services
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.NameId,user.UserId.ToString())
+
             };
             var cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
             var tokenDescription = new SecurityTokenDescriptor

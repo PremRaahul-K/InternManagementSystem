@@ -12,7 +12,7 @@ using UserManagementAPI.Models;
 namespace UserManagementAPI.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20230605063558_init")]
+    [Migration("20230608052404_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

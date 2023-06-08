@@ -1,5 +1,6 @@
 ﻿using InterUserManagementAPI.Models;
 using InterUserManagementAPI.Models.DTOs;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using UserManagementAPI.Interfaces;
@@ -28,20 +29,34 @@ namespace UserManagementAPI.Services
             throw new NotImplementedException();
         }
 
-        public Task<USerDTO> Login(USerDTO user)
+        public async Task<USerDTO> Login(USerDTO user)
         {
-            throw new NotImplementedException();
+            var userData = await _userRepo.Get(user.UserId);
+            if (userData != null)
+            {
+                var hmac = new HMACSHA512(userData.PasswordKey);
+                var userPass = hmac.ComputeHash(Encoding.UTF8.GetBytes(user.Password));
+                for (int i = 0; i < userPass.Length; i++)
+                {
+                    if (userPass[i] != userData.PasswordHash[i])
+                        return null;
+                }
+                user = new USerDTO();
+                user.UserId = userData.UserId;
+                user.Role = userData.Role;
+                user.Token = _tokenService.GenerateToken(user);
+            }
+            return user;
         }
 
-        public async Task<USerDTO> Register(InternDTO intern)
+        public async Task<USerDTO> Register(Intern intern)
         {
 
             USerDTO user = null;
             var hmac = new HMACSHA512();
-            string? generatedPassword = await _passwordService.GeneratePassword(intern);
-            intern.User.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(generatedPassword ?? "1234"));
+            string generatedPassword = await _passwordService.GeneratePassword(intern);
+            intern.User.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(generatedPassword));
             intern.User.PasswordKey = hmac.Key;
-            intern.User.Role = "Intern";
             var userResult = await _userRepo.Add(intern.User);
             var internResult = await _internRepo.Add(intern);
             if (userResult != null && internResult != null)

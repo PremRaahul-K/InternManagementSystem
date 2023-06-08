@@ -16,13 +16,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors(opts =>
-{
-    opts.AddPolicy("AngularCORS", options =>
-    {
-        options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-    });
-});
+
 
 //User Created Services
 builder.Services.AddDbContext<UserContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("UserCon")));
@@ -41,6 +35,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ValidateIssuer = false,
         ValidateAudience = false
     };
+});
+
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy("AngularCORS", options =>
+    {
+        options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+    });
 });
 
 var app = builder.Build();
