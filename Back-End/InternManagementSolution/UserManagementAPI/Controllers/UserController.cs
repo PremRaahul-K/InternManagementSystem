@@ -1,7 +1,10 @@
 ﻿using InterUserManagementAPI.Models;
 using InterUserManagementAPI.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using UserManagementAPI.Interfaces;
 using UserManagementAPI.Models.DTOs;
 using UserManagementAPI.Services;
@@ -10,6 +13,7 @@ namespace UserManagementAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [EnableCors("AngularCORS")]
     public class UserController : ControllerBase
     {
         private readonly IManageUser _manageUser;
@@ -47,6 +51,7 @@ namespace UserManagementAPI.Controllers
             return Ok(user);
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(ActionResult<ICollection<Intern>>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<USerDTO>> GetAllInterns()
@@ -59,6 +64,7 @@ namespace UserManagementAPI.Controllers
             return Ok(users);
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(ActionResult<ICollection<UserApproval>>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ICollection<UserApproval>>> GetAllUsers()
@@ -71,6 +77,7 @@ namespace UserManagementAPI.Controllers
             return Ok(users);
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(ActionResult<ICollection<UserApproval>>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ICollection<UserApproval>>> GetAllNonApprovedUsers()
@@ -84,6 +91,7 @@ namespace UserManagementAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(ActionResult<ICollection<UserApproval>>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ICollection<UserApproval>>> GetAllApprovedUsers()
@@ -96,6 +104,7 @@ namespace UserManagementAPI.Controllers
             return Ok(users);
         }
         [HttpPut]
+        [Authorize]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdatePassword(ManagePassword managePassword)
@@ -109,6 +118,7 @@ namespace UserManagementAPI.Controllers
 
         }
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(ActionResult<UserApproval>), StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<UserApproval>> UpdateUserStatus(UserApproval userApproval)

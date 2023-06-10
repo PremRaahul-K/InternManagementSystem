@@ -19,7 +19,8 @@ namespace UserManagementAPI.Services
             string token = string.Empty;
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId,user.UserId.ToString())
+                new Claim(JwtRegisteredClaimNames.NameId,user.UserId.ToString()),
+                new Claim(ClaimTypes.Role,user.Role)
 
             };
             var cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
